@@ -31,7 +31,7 @@ pass = 827(ISJhs7s
 
 ### How to transfer and delete file
 
-add `transh.sh` content to your .zshrc or .bashrc, and then `source .zshrc` or `source .bashrc`
+add `transh.sh` content to your .zshrc or .bashrc, and then `source .zshrc` or `source .bashrc`, you can change email and pass info by yourself.
 
 #### 1. transfer file
 

@@ -1,4 +1,4 @@
-# add the following code to your .zshrc or .bashrc
+# add the following code to your .zshrc or .bashrc, you can change email and pass by yourself.
 transfer() {
     if [ $# -eq 0 ]; then
         echo "No arguments specified. Usage:\ntransfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
