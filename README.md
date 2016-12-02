@@ -22,7 +22,7 @@ go build -o transfer *.go
 ```
 
 ### config file example
-the following config file is equal to curl -H "X-Alter-Email: chenzhe07@gmail.com" -H "X-Alter-Pass: 827(ISJhs7s" https://xxxx/xxxx`
+the following config file is equal to `curl -H "X-Alter-Email: chenzhe07@gmail.com" -H "X-Alter-Pass: 827(ISJhs7s" https://xxxx/xxxx`
 ```
 $ cat /etc/user.conf 
 [chenzhe07@gmail.com]
