@@ -1,7 +1,7 @@
 # transfer
 Easy and fast file sharing from the command-line
 
-fork from https://github.com/dutchcoders/transfer.sh, but remove was and virustotal features, and add the following features:
+fork from https://github.com/dutchcoders/transfer.sh, but remove aws and virustotal features, and add the following features:
 ```
 1. use custume http header to verifid users;
 2. transfer read configure file to revify user;
