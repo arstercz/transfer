@@ -4,7 +4,7 @@ package main
 import "github.com/chenzhe07/goconfig"
 
 func VerifyOk(username string, passinfo string) bool {
-    if len(username) <= 0 || len(passinfo) <= 0 {
+	if len(username) <= 0 || len(passinfo) <= 0 {
 		return false
 	}
 	c, err := goconfig.ReadConfigFile(config.Conf)

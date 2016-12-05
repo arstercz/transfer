@@ -12,7 +12,7 @@ type Storage interface {
 	Get(token string, filename string) (reader io.ReadCloser, contentType string, contentLength uint64, err error)
 	Head(token string, filename string) (contentType string, contentLength uint64, err error)
 	Put(token string, filename string, reader io.Reader, contentType string, contentLength uint64) error
-    Del(token string, filename string) (contentType string, err error)
+	Del(token string, filename string) (contentType string, err error)
 }
 
 type LocalStorage struct {
@@ -61,13 +61,13 @@ func (s *LocalStorage) Get(token string, filename string) (reader io.ReadCloser,
 
 func (s *LocalStorage) Del(token string, filename string) (contentType string, err error) {
 	path := filepath.Join(s.basedir, token, filename)
-	
+
 	_, err = os.Stat(path)
 	if err != nil {
 		return
 	}
 	contentType = mime.TypeByExtension(filepath.Ext(filename))
-	
+
 	err = os.Remove(path)
 	if err != nil {
 		return

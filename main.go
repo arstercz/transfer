@@ -45,8 +45,8 @@ const SERVER_INFO = "transfer.sh"
 const _24K = (1 << 20) * 24
 
 var config struct {
-	Temp    string
-	Conf    string
+	Temp string
+	Conf string
 }
 
 var storage Storage
@@ -79,6 +79,13 @@ func main() {
 
 	flag.Parse()
 
+	config.Temp = *temp
+	config.Conf = *conf
+
+	if len(config.Conf) <= 0 {
+		fmt.Println("Error: You must secipfy the conf file")
+		os.Exit(1)
+	}
 	if *logpath != "" {
 		f, err := os.OpenFile(*logpath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
@@ -89,9 +96,6 @@ func main() {
 
 		log.SetOutput(f)
 	}
-
-	config.Temp = *temp
-	config.Conf = *conf
 
 	var err error
 
