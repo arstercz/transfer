@@ -25,13 +25,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 package main
 
 import (
+	"fmt"
 	"math"
 	"strings"
 )
 
 const (
 	// characters used for short-urls
-	SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
 	// someone set us up the bomb !!
 	BASE = int64(len(SYMBOLS))
