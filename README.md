@@ -11,8 +11,8 @@ fork from https://github.com/dutchcoders/transfer.sh, but remove aws and virusto
 
 ### How to build
 ```
-go get github.com/chenzhe07/transfer
-cd $GOPATH/src/github.com/chenzhe07/transfer
+go get github.com/arstercz/transfer
+cd $GOPATH/src/github.com/arstercz/transfer
 go build -o transfer *.go
 ```
 
@@ -56,14 +56,13 @@ http://127.0.0.1:8000/9b09/mysql.3306.txt-20161202154850
 
 ```
 $ transfer-del http://127.0.0.1:8000/9b09dhj/mysql.3306.txt-20161202154850
-delete 9b09dhj/mysql.3306.txt-20161202154850 ok
+delete 9b09/mysql.3306.txt-20161202154850 ok
 ```
 
-#### 3. transfer with wrong http header pass:
+#### 3. transfer with wrong user or pass:
 
-http 500 returned when there is wrong email and pass
+http 401 returned when there is wrong user and pass
 ```
 $  transfer mysql.3306.txt 
-                                                                           0.0%
-Verify user and pass error
+Authorized error!
 ```
