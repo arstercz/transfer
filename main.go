@@ -39,7 +39,7 @@ import (
 	"time"
 )
 
-const SERVER_INFO = "transfer.sh"
+const SERVER_INFO = "transfer"
 
 // parse request with maximum memory of _24Kilobits
 const _24K = (1 << 20) * 24
@@ -59,15 +59,15 @@ func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	r := mux.NewRouter()
-	r.HandleFunc("/{token}/{filename}", getHandler).Methods("GET")
-	r.HandleFunc("/get/{token}/{filename}", getHandler).Methods("GET")
-	r.HandleFunc("/put/{filename}", putHandler).Methods("PUT")
-	r.HandleFunc("/upload/{filename}", putHandler).Methods("PUT")
-	r.HandleFunc("/{filename}", putHandler).Methods("PUT")
-	r.HandleFunc("/health.html", healthHandler).Methods("GET")
-	r.HandleFunc("/", postHandler).Methods("POST")
+	r.HandleFunc("/{token}/{filename}", auth(getHandler, basicAuth)).Methods("GET")
+	r.HandleFunc("/get/{token}/{filename}", auth(getHandler, basicAuth)).Methods("GET")
+	r.HandleFunc("/put/{filename}", auth(putHandler, basicAuth)).Methods("PUT")
+	r.HandleFunc("/upload/{filename}", auth(putHandler, basicAuth)).Methods("PUT")
+	r.HandleFunc("/{filename}", auth(putHandler, basicAuth)).Methods("PUT")
+	r.HandleFunc("/health.html", auth(healthHandler, basicAuth)).Methods("GET")
+	r.HandleFunc("/", auth(postHandler, basicAuth)).Methods("POST")
 	// r.HandleFunc("/{page}", viewHandler).Methods("GET")
-	r.HandleFunc("/{token}/{filename}", delHandler).Methods("DELETE")
+	r.HandleFunc("/{token}/{filename}", auth(delHandler, basicAuth)).Methods("DELETE")
 
 	r.NotFoundHandler = http.HandlerFunc(notFoundHandler)
 
