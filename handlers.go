@@ -1,33 +1,12 @@
 /*
 The MIT License (MIT)
 
-Copyright (c) 2014 DutchCoders [https://github.com/dutchcoders/]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+zhe.chen<chenzhe07@gmail.com>
 */
 
 package main
 
 import (
-	// _ "transfer.sh/app/handlers"
-	// _ "transfer.sh/app/utils"
-
 	"archive/tar"
 	"archive/zip"
 	"bytes"
@@ -64,7 +43,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token := Encode(10000000 + int64(rand.Intn(1000000000)))
+	token := Encode(10000 + int64(rand.Intn(10000)))
 
 	w.Header().Set("Content-Type", "text/plain")
 
@@ -188,8 +167,8 @@ func putHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	contentType := r.Header.Get("Content-Type")
-	alterUser   := r.Header.Get("X-Alter-Email")
-	alterPass   := r.Header.Get("X-Alter-Pass")
+	alterUser := r.Header.Get("X-Alter-Email")
+	alterPass := r.Header.Get("X-Alter-Pass")
 
 	if !VerifyOk(alterUser, alterPass) {
 		log.Printf("Verify user error, Email: %s, Pass: %s", alterUser, alterPass)
@@ -201,7 +180,7 @@ func putHandler(w http.ResponseWriter, r *http.Request) {
 		contentType = mime.TypeByExtension(filepath.Ext(vars["filename"]))
 	}
 
-	token := Encode(10000000 + int64(rand.Intn(1000000000)))
+	token := Encode(100000 + int64(rand.Intn(100000)))
 
 	//log.Printf("Uploading %s %d %s", token, filename, contentLength, contentType)
 	log.Printf("upload -- http://%s/%s/%s size:%d type:%s user:%s pass:%s", r.Host, token, filename, contentLength, contentType, alterUser, alterPass)
@@ -435,8 +414,8 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 
 func delHandler(w http.ResponseWriter, r *http.Request) {
 	// check header info
-	alterUser   := r.Header.Get("X-Alter-Email")
-	alterPass   := r.Header.Get("X-Alter-Pass")
+	alterUser := r.Header.Get("X-Alter-Email")
+	alterPass := r.Header.Get("X-Alter-Pass")
 
 	if !VerifyOk(alterUser, alterPass) {
 		log.Printf("Verify user error, Email: %s, Pass: %s", alterUser, alterPass)
@@ -445,18 +424,18 @@ func delHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	vars := mux.Vars(r)
-	
+
 	token := vars["token"]
 	filename := vars["filename"]
-	
+
 	contentType, err := storage.Del(token, filename)
 	if err != nil {
 		log.Printf("%s", err.Error())
 		http.Error(w, "delete file error.", 500)
 		return
 	}
-    log.Printf("delete -- http://%s/%s/%s user:%s pass:%s", ipAddrFromRemoteAddr(r.Host), token, filename, alterUser, alterPass)
-	
+	log.Printf("delete -- http://%s/%s/%s user:%s pass:%s", ipAddrFromRemoteAddr(r.Host), token, filename, alterUser, alterPass)
+
 	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Disposition", fmt.Sprintf("delete attachment; file=\"%s/%s\"", token, filename))
 	w.Header().Set("Connection", "close")
