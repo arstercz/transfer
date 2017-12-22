@@ -3,7 +3,7 @@ Easy and fast file sharing from the command-line
 
 fork from https://github.com/dutchcoders/transfer.sh, but remove aws and virustotal features, and add the following features:
 ```
-1. use custume http header to verifid users;
+1. http basic auth to verifid users;
 2. transfer read configure file to revify user;
 3. add timestamp to the upload file;
 4. use http delete method to delete file;
@@ -22,23 +22,34 @@ go build -o transfer *.go
 ```
 
 ### config file example
-the following config file is equal to `curl -H "X-Alter-Email: chenzhe07@gmail.com" -H "X-Alter-Pass: 827(ISJhs7s" https://xxxx/xxxx`
+the following config file set the user and password that the client must use http basic auth to verify wheather the user is valid. the username is `arstercz` or `user2`, you can set multi users. 
 ```
 $ cat /etc/user.conf 
-[arstercz@gmail.com]
-pass = 827(ISJhs7s
+[user1]
+pass = pass1
+[user2]
+pass = pass2
 ```
 
 ### How to transfer and delete file
 
-add `transh.sh` content to your .zshrc or .bashrc, and then `source .zshrc` or `source .bashrc`, you can change email and pass info by yourself.
+you can use `curl` to transfer file, such as following command:
+```
+# curl -u 'user1':'pass1'  --upload-file file http://127.0.0.1:8000/
+http://127.0.0.1:8000/2xzy/file-20171222154850
+
+# curl -u 'user1':'pass1'  -X DELETE http://127.0.0.1:8889/2xzy/file-20171222154850       
+```
+
+and you add `transh.sh` content to your .zshrc or .bashrc, and then `source .zshrc` or `source .bashrc`, you can change user and pass info by yourself.
 
 #### 1. transfer file
+
 
 ```
 $ transfer mysql.3306.txt 
 ######################################################################## 100.0%
-http://127.0.0.1:8000/9b09dhj/mysql.3306.txt-20161202154850
+http://127.0.0.1:8000/9b09/mysql.3306.txt-20161202154850
 ```
 
 #### 2. delete file
