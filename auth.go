@@ -1,3 +1,4 @@
+// ref https://gist.github.com/elithrar/9146306
 package main
 
 import (
