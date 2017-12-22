@@ -167,15 +167,6 @@ func putHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	contentType := r.Header.Get("Content-Type")
-	alterUser := r.Header.Get("X-Alter-Email")
-	alterPass := r.Header.Get("X-Alter-Pass")
-
-	if !VerifyOk(alterUser, alterPass) {
-		log.Printf("Verify user error, Email: %s, Pass: %s", alterUser, alterPass)
-		http.Error(w, errors.New("Verify user and pass error").Error(), 500)
-		return
-	}
-
 	if contentType == "" {
 		contentType = mime.TypeByExtension(filepath.Ext(vars["filename"]))
 	}
@@ -183,7 +174,7 @@ func putHandler(w http.ResponseWriter, r *http.Request) {
 	token := Encode(100000 + int64(rand.Intn(100000)))
 
 	//log.Printf("Uploading %s %d %s", token, filename, contentLength, contentType)
-	log.Printf("upload -- http://%s/%s/%s size:%d type:%s user:%s pass:%s", r.Host, token, filename, contentLength, contentType, alterUser, alterPass)
+	log.Printf("upload -- http://%s/%s/%s size:%d type:%s user:%s pass:%s", r.Host, token, filename, contentLength, contentType)
 
 	var err error
 
@@ -413,16 +404,6 @@ func getHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func delHandler(w http.ResponseWriter, r *http.Request) {
-	// check header info
-	alterUser := r.Header.Get("X-Alter-Email")
-	alterPass := r.Header.Get("X-Alter-Pass")
-
-	if !VerifyOk(alterUser, alterPass) {
-		log.Printf("Verify user error, Email: %s, Pass: %s", alterUser, alterPass)
-		http.Error(w, errors.New("Verify user and pass error").Error(), 500)
-		return
-	}
-
 	vars := mux.Vars(r)
 
 	token := vars["token"]
@@ -434,7 +415,7 @@ func delHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "delete file error.", 500)
 		return
 	}
-	log.Printf("delete -- http://%s/%s/%s user:%s pass:%s", ipAddrFromRemoteAddr(r.Host), token, filename, alterUser, alterPass)
+	log.Printf("delete -- http://%s/%s/%s user:%s pass:%s", ipAddrFromRemoteAddr(r.Host), token, filename)
 
 	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Disposition", fmt.Sprintf("delete attachment; file=\"%s/%s\"", token, filename))
