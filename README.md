@@ -36,12 +36,12 @@ pass = pass2
 you can use `curl` to transfer file, such as following command:
 ```
 # curl -u 'user1':'pass1'  --upload-file file http://127.0.0.1:8000/
-http://127.0.0.1:8000/2xzy/file-20171222154850
+http://127.0.0.1:8000/2xzy/file
 
-# curl -u 'user1':'pass1'  -X DELETE http://127.0.0.1:8889/2xzy/file-20171222154850       
+# curl -u 'user1':'pass1'  -X DELETE http://127.0.0.1:8889/2xzy/file
 ```
 
-and you add `transh.sh` content to your .zshrc or .bashrc, and then `source .zshrc` or `source .bashrc`, you can change user and pass info by yourself.
+the `transh.sh` add the timestamp to the postfix filename, you can add `transh.sh` content to your .zshrc or .bashrc, and then `source .zshrc` or `source .bashrc`, you can change user and pass info by yourself.
 
 #### 1. transfer file
 
