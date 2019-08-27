@@ -75,7 +75,7 @@ func main() {
 	r.HandleFunc("/put/{filename}", auth(putHandler, basicAuth)).Methods("PUT")
 	r.HandleFunc("/upload/{filename}", auth(putHandler, basicAuth)).Methods("PUT")
 	r.HandleFunc("/{filename}", auth(putHandler, basicAuth)).Methods("PUT")
-	r.HandleFunc("/health.html", auth(healthHandler, basicAuth)).Methods("GET")
+	r.HandleFunc("/health.html", healthHandler).Methods("GET")
 	r.HandleFunc("/", auth(postHandler, basicAuth)).Methods("POST")
 	// r.HandleFunc("/{page}", viewHandler).Methods("GET")
 	r.HandleFunc("/{token}/{filename}", auth(delHandler, basicAuth)).Methods("DELETE")

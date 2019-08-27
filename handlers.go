@@ -29,7 +29,8 @@ import (
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Approaching Neutral Zone, all systems normal and functioning.")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("transfer is ok!"))
 }
 
 func notFoundHandler(w http.ResponseWriter, r *http.Request) {
@@ -174,7 +175,7 @@ func putHandler(w http.ResponseWriter, r *http.Request) {
 	token := GenRandStr(SYMBOLS)
 
 	//log.Printf("Uploading %s %d %s", token, filename, contentLength, contentType)
-	log.Printf("upload -- http://%s/%s/%s size:%d type:%s user:%s pass:%s", r.Host, token, filename, contentLength, contentType)
+	log.Printf("upload -- http://%s/%s/%s size:%d type:%s", r.Host, token, filename, contentLength, contentType)
 
 	var err error
 
@@ -415,7 +416,7 @@ func delHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "delete file error.", 500)
 		return
 	}
-	log.Printf("delete -- http://%s/%s/%s user:%s pass:%s", ipAddrFromRemoteAddr(r.Host), token, filename)
+	log.Printf("delete -- http://%s/%s/%s", ipAddrFromRemoteAddr(r.Host), token, filename)
 
 	w.Header().Set("Content-Type", contentType)
 	w.Header().Set("Content-Disposition", fmt.Sprintf("delete attachment; file=\"%s/%s\"", token, filename))
