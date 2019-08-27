@@ -22,7 +22,7 @@ go build -o transfer *.go
 ```
 
 ### config file example
-the following config file set the user and password that the client must use http basic auth to verify wheather the user is valid. the username is `arstercz` or `user2`, you can set multi users. 
+the following config file set the user and password that the client must use http basic auth to verify wheather the user is valid. the username is `user1` or `user2`, you can set multi users. 
 ```
 $ cat /etc/user.conf 
 [user1]
