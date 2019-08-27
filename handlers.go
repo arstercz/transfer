@@ -18,7 +18,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"math/rand"
+	_ "math/rand"
 	"mime"
 	"net/http"
 	"os"
@@ -43,7 +43,7 @@ func postHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token := Encode(10000 + int64(rand.Intn(10000)))
+	token := GenRandStr(SYMBOLS)
 
 	w.Header().Set("Content-Type", "text/plain")
 
@@ -171,7 +171,7 @@ func putHandler(w http.ResponseWriter, r *http.Request) {
 		contentType = mime.TypeByExtension(filepath.Ext(vars["filename"]))
 	}
 
-	token := Encode(100000 + int64(rand.Intn(100000)))
+	token := GenRandStr(SYMBOLS)
 
 	//log.Printf("Uploading %s %d %s", token, filename, contentLength, contentType)
 	log.Printf("upload -- http://%s/%s/%s size:%d type:%s user:%s pass:%s", r.Host, token, filename, contentLength, contentType)

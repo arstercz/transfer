@@ -26,12 +26,14 @@ package main
 
 import (
 	"math"
+	"math/rand"
 	"strings"
+	"time"
 )
 
 const (
 	// characters used for short-urls
-	SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyz"
+	SYMBOLS = "abcdef"
 
 	// someone set us up the bomb !!
 	BASE = int64(len(SYMBOLS))
@@ -62,4 +64,20 @@ func Decode(input string) int64 {
 		sum = sum + (pos * int(math.Pow(floatbase, float64((l-index-1)))))
 	}
 	return int64(sum)
+}
+
+func GenRandStr(s string) string {
+	rand.Seed(time.Now().UnixNano())
+	var result string
+
+	if len(s) == 1 {
+		result = s
+	} else {
+		indexRand := rand.Intn(len(s) - 1)
+		resTemp := string(s[indexRand])
+		s = strings.Replace(s, string(s[indexRand]), "", -1)
+		result = resTemp + GenRandStr(s)
+	}
+
+	return result
 }
