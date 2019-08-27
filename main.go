@@ -41,6 +41,8 @@ import (
 
 const SERVER_INFO = "transfer"
 
+var IsAuth bool = false
+
 // parse request with maximum memory of _24Kilobits
 const _24K = (1 << 20) * 24
 
@@ -58,6 +60,15 @@ func init() {
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
+	port := flag.String("port", "8080", "port number, default: 8080")
+	temp := flag.String("temp", config.Temp, "")
+	basedir := flag.String("basedir", "", "")
+	logpath := flag.String("log", "", "")
+	isauth := flag.Bool("auth", false, "whether enable http basic auth or not")
+	conf := flag.String("conf", "", "config file to verify nomarl user")
+	flag.Parse()
+
+	IsAuth = *isauth
 	r := mux.NewRouter()
 	r.HandleFunc("/{token}/{filename}", auth(getHandler, basicAuth)).Methods("GET")
 	r.HandleFunc("/get/{token}/{filename}", auth(getHandler, basicAuth)).Methods("GET")
@@ -71,19 +82,11 @@ func main() {
 
 	r.NotFoundHandler = http.HandlerFunc(notFoundHandler)
 
-	port := flag.String("port", "8080", "port number, default: 8080")
-	temp := flag.String("temp", config.Temp, "")
-	basedir := flag.String("basedir", "", "")
-	logpath := flag.String("log", "", "")
-	conf := flag.String("conf", "", "config file to verify nomarl user")
-
-	flag.Parse()
-
 	config.Temp = *temp
 	config.Conf = *conf
 
-	if len(config.Conf) <= 0 {
-		fmt.Println("Error: You must secipfy the conf file")
+	if IsAuth && len(config.Conf) <= 0 {
+		fmt.Println("error: You must secipfy the conf file to add the username and password!")
 		os.Exit(1)
 	}
 	if *logpath != "" {

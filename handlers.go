@@ -1,7 +1,7 @@
 /*
 The MIT License (MIT)
 
-zhe.chen<chenzhe07@gmail.com>
+arstercz<arstercz@gmail.com>
 */
 
 package main

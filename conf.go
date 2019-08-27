@@ -1,7 +1,7 @@
 /*config read to verify normal user*/
 package main
 
-import "github.com/chenzhe07/goconfig"
+import "github.com/arstercz/goconfig"
 
 func VerifyOk(username string, passinfo string) bool {
 	if len(username) <= 0 || len(passinfo) <= 0 {
